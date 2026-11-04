@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landmark Vibes - Login</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+  body{background:#0a7a42;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+  .card{background:white;width:100%;max-width:400px;padding:30px;border-radius:20px;text-align:center;box-shadow:0 10px 30px #00000030}
+  .logo{font-size:50px}
+  h1{color:#0a7a42;margin:10px 0 5px}
+  p{color:#666;font-size:14px;margin-bottom:20px}
+  input{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;margin-bottom:12px;outline:none;font-size:15px}
+  input:focus{border-color:#0a7a42}
+  .btn-gmail{background:white;border:1px solid #ddd;width:100%;padding:13px;border-radius:12px;cursor:pointer;font-weight:bold;font-size:15px;display:flex;align-items:center;justify-content:center;gap:10px}
+  .btn-gmail:hover{background:#f8f8f8}
+  .btn-enter{background:#0a7a42;color:white;border:none;width:100%;padding:14px;border-radius:12px;cursor:pointer;font-weight:bold;font-size:16px;margin-top:12px}
+  .small{font-size:12px;color:#888;margin-top:15px}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">🌴</div>
+  <h1>Landmark Vibes</h1>
+  <p>Chat, Gist & Market for Landmark Students</p>
+
+  <input type="text" id="matric" placeholder="Enter your Matric No e.g. LMU/23/1234">
+  <input type="text" id="name" placeholder="Enter your Name e.g. Tobi">
+
+  <button class="btn-gmail" onclick="loginWithGmail()">
+    <img src="https://www.google.com/favicon.ico" width="20"> Continue with Gmail
+  </button>
+
+  <button class="btn-enter" onclick="enterApp()">Enter Vibes 🚀</button>
+
+  <p class="small">By continuing, you agree say you be Landmark student. <br> Link: landmarkvibes.vercel.app</p>
+</div>
+
+<script>
+function loginWithGmail(){
+  let matric = document.getElementById('matric').value;
+  if(!matric){ alert("Put your Matric No first!"); return; }
+  localStorage.setItem('matric', matric);
+  localStorage.setItem('name', document.getElementById('name').value || "Landmark Student");
+  // Later we go connect real Firebase Google Auth here
+  alert("Gmail Login (Demo) ✅ Matric saved: " + matric);
+  window.location.href = "feed.html";
+}
+
+function enterApp(){
+  let matric = document.getElementById('matric').value;
+  let name = document.getElementById('name').value;
+  if(!matric || !name){ alert("Put Matric No + Name first"); return; }
+  localStorage.setItem('matric', matric);
+  localStorage.setItem('name', name);
+  window.location.href = "feed.html";
+}
+</script>
+</body>
+</html>

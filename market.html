@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landmark Vibes - Market</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+  body{background:#f0f2f5;padding-bottom:70px}
+  header{background:#0a7a42;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
+  header a{color:white;text-decoration:none;background:#00000033;padding:7px 12px;border-radius:20px;font-size:13px}
+  .container{max-width:900px;margin:15px auto;padding:0 10px}
+  .search{background:white;padding:12px;border-radius:12px;display:flex;gap:10px;margin-bottom:15px;box-shadow:0 1px 3px #00000020}
+  .search input{flex:1;padding:10px;border:1px solid #ddd;border-radius:20px;outline:none}
+  .search button{background:#0a7a42;color:white;border:none;padding:10px 16px;border-radius:20px;cursor:pointer;font-weight:bold}
+  .sell-box{background:white;padding:15px;border-radius:12px;margin-bottom:15px;box-shadow:0 1px 3px #00000020}
+  .sell-box input,.sell-box textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;margin-bottom:10px;outline:none}
+  .sell-box button{background:#0a7a42;color:white;border:none;padding:11px 18px;border-radius:20px;cursor:pointer;font-weight:bold}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .item{background:white;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px #00000020}
+  .item img{width:100%;height:150px;object-fit:cover}
+  .item-body{padding:10px}
+  .item-body b{font-size:14px}
+  .item-body p{font-size:13px;color:#666;margin:4px 0}
+  .price{color:#0a7a42;font-weight:bold;font-size:15px}
+  .badge{font-size:11px;background:#e8f5e9;color:#0a7a42;padding:3px 7px;border-radius:20px;font-weight:bold}
+  .item-body button{width:100%;background:#0a7a42;color:white;border:none;padding:8px;border-radius:20px;margin-top:8px;cursor:pointer;font-weight:bold}
+  nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:13px;border-top:1px solid #ddd}
+  nav a{text-decoration:none;color:#333;font-weight:bold;font-size:14px}
+  nav a.active{color:#0a7a42}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛒 Landmark Market</h1>
+  <a href="feed.html">🏠 Feed</a>
+</header>
+
+<div class="container">
+  <div class="search">
+    <input id="searchInput" placeholder="Search wig, handout, powerbank, food..." oninput="render()">
+    <button onclick="render()">Search</button>
+  </div>
+
+  <div class="sell-box">
+    <h3 style="margin-bottom:10px">Sell Something 🚀</h3>
+    <input id="pName" placeholder="Product name e.g. Powerbank 20000mAh">
+    <input id="pPrice" placeholder="Price e.g. ₦15,000">
+    <input id="pSeller" placeholder="Your name + Hostel">
+    <button onclick="addProduct()">Post for Sale</button>
+    <p style="font-size:12px;color:#888;margin-top:8px">Vendor Verification: ₦1k — DM admin to get ✅ badge</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<nav>
+  <a href="feed.html">🏠 Feed</a>
+  <a href="chat.html">💬 Chat</a>
+  <a href="market.html" class="active">🛒 Market</a>
+  <a href="index.html">👤 Logout</a>
+</nav>
+
+<script>
+let products = [
+  {name:"Human Hair Wig 26 inches", price:"₦45,000", seller:"Chisom Wigs ✅", img:"https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600", verified:true},
+  {name:"GST 101 Handout", price:"₦2,500", seller:"Tobi - Hostel C", img:"https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600", verified:false},
+  {name:"Powerbank 20000mAh", price:"₦15,000", seller:"Emeka - Hostel B", img:"https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=600", verified:true},
+  {name:"Fried Rice + Chicken", price:"₦3,500", seller:"Mama Vee Food ✅", img:"https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", verified:true},
+  {name:"Ankara Gown", price:"₦12,000", seller:"Ada Fashion", img:"https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600", verified:false},
+  {name:"Scientific Calculator", price:"₦8,000", seller:"David - 200L ENG", img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600", verified:false},
+];
+
+function render(){
+  let q = document.getElementById('searchInput').value.toLowerCase();
+  let grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  products.filter(p => p.name.toLowerCase().includes(q)).forEach(p=>{
+    grid.innerHTML += `
+    <div class="item">
+      <img src="${p.img}">
+      <div class="item-body">
+        <b>${p.name}</b>
+        <p>${p.seller} ${p.verified ? '<span class="badge">Verified ✅</span>' : ''}</p>
+        <div class="price">${p.price}</div>
+        <button onclick="buyNow('${p.name}')">Chat Seller 💬</button>
+      </div>
+    </div>`;
+  });
+}
+function addProduct(){
+  let name = document.getElementById('pName').value;
+  let price = document.getElementById('pPrice').value;
+  let seller = document.getElementById('pSeller').value;
+  if(!name || !price) return alert("Put name + price");
+  products.unshift({name:name, price:price, seller:seller || "You", img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600", verified:false});
+  document.getElementById('pName').value='';
+  document.getElementById('pPrice').value='';
+  render(); alert("Posted for sale! ✅");
+}
+function buyNow(name){
+  alert("You wan buy: " + name + "\nE go carry you go Chat to talk to seller.");
+  window.location.href = "chat.html";
+}
+render();
+</script>
+</body>
+</html>
