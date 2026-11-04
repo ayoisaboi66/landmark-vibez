@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Landmark Vibes - Chat</title>
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-  body{background:#f0f2f5;display:flex;flex-direction:column;height:100vh}
-  header{background:#0a7a42;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}
-  header a{color:white;text-decoration:none}
-  .layout{display:flex;flex:1;overflow:hidden;max-width:900px;width:100%;margin:0 auto}
-  .sidebar{width:260px;background:white;border-right:1px solid #ddd;overflow-y:auto}
-  .sidebar h3{padding:12px;border-bottom:1px solid #eee;font-size:14px}
-  .person{padding:12px 15px;cursor:pointer;display:flex;gap:10px;align-items:center;border-bottom:1px solid #f0f0f0}
+ursor:pointer;display:flex;gap:10px;align-items:center;border-bottom:1px solid #f0f0f0}
   .person.active{background:#e8f5e9}
   .avatar{width:38px;height:38px;border-radius:50%;background:#0a7a42;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
   .chat-area{flex:1;display:flex;flex-direction:column;background:#e5ddd5}
@@ -29,38 +15,7 @@
   #videoBox{display:none;background:black;padding:10px;text-align:center}
   #videoBox video{width:45%;border-radius:10px;background:#333}
   nav{background:white;display:flex;justify-content:space-around;padding:13px;border-top:1px solid #ddd}
-  nav a{text-decoration:none;color:#333;font-weight:bold;font-size:14px}
-  nav a.active{color:#0a7a42}
-  @media(max-width:650px){.sidebar{width:110px}.sidebar small{display:none}}
-</style>
-</head>
-<body>
-
-<header>
-  <a href="feed.html">← Back</a>
-  <b>💬 Landmark Chat</b>
-  <span id="myName">You</span>
-</header>
-
-<div id="videoBox">
-  <video id="myVideo" autoplay muted playsinline></video>
-  <video id="friendVideo" autoplay playsinline></video>
-  <br><button onclick="stopVideo()" style="background:red;color:white;border:none;padding:8px 15px;border-radius:20px;margin-top:8px;cursor:pointer">End Call ❌</button>
-  <p style="color:white;font-size:12px;margin-top:5px">Video Call - WebRTC Demo (works on same WiFi / Internet with Firebase later)</p>
-</div>
-
-<div class="layout">
-  <div class="sidebar">
-    <h3>👥 Group Chats</h3>
-    <div class="person" onclick="openChat('CSC 100L Group',this)"><div class="avatar">C</div><div><b>CSC 100L Group</b><br><small>120 members</small></div></div>
-    <div class="person" onclick="openChat('Hostel C Gist',this)"><div class="avatar">H</div><div><b>Hostel C Gist</b><br><small>89 members</small></div></div>
-    <div class="person" onclick="openChat('BCH 200L',this)"><div class="avatar">B</div><div><b>BCH 200L</b><br><small>65 members</small></div></div>
-    <h3>💬 1-on-1</h3>
-    <div class="person active" onclick="openChat('Tobi',this)"><div class="avatar">T</div><div><b>Tobi</b><br><small>Online</small></div></div>
-    <div class="person" onclick="openChat('Ada',this)"><div class="avatar">A</div><div><b>Ada</b><br><small>Online</small></div></div>
-    <div class="person" onclick="openChat('Chisom Vendor',this)"><div class="avatar">C</div><div><b>Chisom Vendor ✅</b><br><small>Online</small></div></div>
-  </div>
-
+  nav a{text-decoration:none;colo
   <div class="chat-area">
     <div class="chat-head">
       <b id="chatName">Tobi</b>
@@ -135,20 +90,4 @@ function sendImage(e){
   chats[currentChat].push({from:'me', img:url});
   renderChat();
 }
-async function startVideo(){
-  document.getElementById('videoBox').style.display='block';
-  try{
-    let stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    document.getElementById('myVideo').srcObject = stream;
-    alert("Video Call started! 📹 Your camera don on. Later we go connect am to your friend with WebRTC + Firebase.");
-  }catch(err){ alert("Allow camera permission to video call"); }
-}
-function stopVideo(){
-  document.getElementById('videoBox').style.display='none';
-  let v = document.getElementById('myVideo');
-  if(v.srcObject) v.srcObject.getTracks().forEach(t=>t.stop());
-}
-renderChat();
-</script>
-</body>
-</html>
+async func

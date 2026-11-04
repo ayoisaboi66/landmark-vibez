@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Notes - Landmark Vibes</title>
+<style>body{font-family:Arial;background:#f5f5f5;margin:0;padding:14px}h1{color:#0f7a3d}textarea{width:100%;height:180px;padding:12px;border-radius:12px;border:1px solid #ddd;box-sizing:border-box}button{background:#0f7a3d;color:#fff;border:0;padding:13px 18px;border-radius:10px;font-weight:700;cursor:pointer;width:100%;margin-top:10px}.card{background:#fff;padding:16px;border-radius:14px;margin-top:14px}.drop{border:2px dashed #0f7a3d;padding:24px;text-align:center;border-radius:14px;background:#eafff0}</style></head>
+<body><a href="feed.html">← Back to Feed</a><h1>📚 AI Course Notes</h1><p>Upload your course notes, AI go summarize am for you.</p>
+<div class="drop"><b>📄 Drop PDF / TXT here or Paste Below</b><br><input type="file" id="file" accept=".txt,.pdf,.docx" style="margin-top:10px"></div>
+<textarea id="notes" placeholder="Paste your course notes here... e.g CSC 201 - Data Structures..."></textarea>
+<button onclick="summarize()">✨ Summarize with AI</button>
+<div id="out"></div>
+<script>
+document.getElementById('file').addEventListener('change',e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>document.getElementById('notes').value=r.result.slice(0,8000);r.readAsText(f)});
+function summarize(){
+ let t=document.getElementById('notes').value.trim();if(t.length<50) return alert('Paste longer notes first!');
+ let sentences=t.split('.').filter(s=>s.trim().length>20);
+ let summary=sentences.slice(0,5).join('. ')+'.';
+ let keys=sentences.slice(0,6).map(s=>'<li>'+s.trim().slice(0,120)+'</li>').join('');
+ let words=t.split(' ').filter(w=>w.length>5);let top=[...new Set(words)].slice(0,5);
+ document.getElementById('out').innerHTML=`<div class="card"><h3>✨ AI Summary</h3><p>${summary}</p><h3>📌 Key Points</h3><ul>${keys}</ul><h3>📝 Flashcards</h3><p><b>Q:</b> What is ${top[0]}?<br><b>A:</b> ${sentences[0]||''}</p><p><b>Q:</b> Explain ${top[1]||'topic'}<br><b>A:</b> ${sentences[1]||''}</p><h3>❓ Quick Quiz</h3><p>1. What is the main idea of this note?<br>2. List 3 key points from this topic.<br>3. How would you explain this to a 100L student?</p></div>`;
+}
+</script></body></html>
